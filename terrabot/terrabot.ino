@@ -1,10 +1,14 @@
+/* **************
+ *  This is the main file
+ *************** */
+
 #include <ros.h>
 #include <std_msgs/Empty.h>
 
 
 // instantiate handler note which allows program to create publishers
 // and subscibers and handles serial port communication
-ros::NodeHandle nh;
+ros::NodeHandle teensy;
 
 
 // callback function for the subsriber. Call back function must take constant
@@ -22,21 +26,14 @@ ros::Subscriber<std_msgs::Empty> sub("toggle_led", &messageCb );
 
 void setup() {
   pinMode(13, OUTPUT);
-  nh.initNode();
-  nh.subscribe(sub);
+  teensy.initNode();
+  teensy.subscribe(sub);
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  nh.spinOnce();
+  teensy.spinOnce();
   delay(1);
 
 }
-
-//TO RUN
-//roscore
-//new terminal: rosrun rosserial_python serial_node.py /dev/ttyUSB0
-//USE CORRECT Serial port in above line
-//new terminal
-//rostopic pub toggle_led std_msgs/Empty --once
